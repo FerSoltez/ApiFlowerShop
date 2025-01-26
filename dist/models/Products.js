@@ -38,6 +38,6 @@ ProductModel.init({
     sequelize: database_1.sequelize,
     modelName: 'Products',
     tableName: 'Products',
-    timestamps: true
+    timestamps: false
 });
 exports.default = ProductModel;
