@@ -5,16 +5,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const database_1 = __importDefault(require("../config/database"));
-class Products extends sequelize_1.Model {
+class ProductModel extends sequelize_1.Model {
 }
-Products.init({
+ProductModel.init({
     id: {
         type: sequelize_1.DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
     },
     name: {
-        type: sequelize_1.DataTypes.STRING(100),
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false,
     },
     price: {
@@ -22,26 +22,24 @@ Products.init({
         allowNull: false,
     },
     image: {
-        type: sequelize_1.DataTypes.STRING(255),
-        allowNull: false,
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true,
     },
     discount: {
         type: sequelize_1.DataTypes.FLOAT,
-        allowNull: true,
-        defaultValue: 0, // Valor predeterminado de descuento es 0
+        defaultValue: 0,
     },
     quantity: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
     },
     description: {
-        type: sequelize_1.DataTypes.STRING(255),
+        type: sequelize_1.DataTypes.TEXT,
         allowNull: false,
     },
 }, {
     sequelize: database_1.default,
-    modelName: 'Products',
-    tableName: 'Products',
-    timestamps: true, // Agrega createdAt y updatedAt
+    modelName: "Product",
+    timestamps: true, // createdAt and updatedAt
 });
-exports.default = Products;
+exports.default = ProductModel;

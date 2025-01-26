@@ -13,11 +13,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Products_1 = __importDefault(require("../models/Products"));
-const productsController = {
-    createProducts: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const productController = {
+    createProduct: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const newProducts = yield Products_1.default.create(req.body);
-            res.status(201).json(newProducts);
+            const newProduct = yield Products_1.default.create(req.body);
+            res.status(201).json(newProduct);
         }
         catch (error) {
             res.status(500).json({ error: error.message });
@@ -32,62 +32,62 @@ const productsController = {
             res.status(500).json({ error: error.message });
         }
     }),
-    getProducts: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    getProduct: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const products = yield Products_1.default.findByPk(req.params.id);
-            if (products) {
-                res.status(200).json(products);
+            const product = yield Products_1.default.findByPk(req.params.id);
+            if (product) {
+                res.status(200).json(product);
             }
             else {
-                res.status(404).json({ message: 'Producto no encontrado' });
+                res.status(404).json({ message: "Producto no encontrado" });
             }
         }
         catch (error) {
             res.status(500).json({ error: error.message });
         }
     }),
-    updateProducts: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    updateProduct: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const [updated] = yield Products_1.default.update(req.body, { where: { id: req.params.id } });
             if (updated) {
-                const updatedProducts = yield Products_1.default.findByPk(req.params.id);
-                res.status(200).json(updatedProducts);
+                const updatedProduct = yield Products_1.default.findByPk(req.params.id);
+                res.status(200).json(updatedProduct);
             }
             else {
-                res.status(404).json({ message: 'Producto no encontrado' });
+                res.status(404).json({ message: "Producto no encontrado" });
             }
         }
         catch (error) {
             res.status(500).json({ error: error.message });
         }
     }),
-    deleteProducts: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    deleteProduct: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const deleted = yield Products_1.default.destroy({ where: { id: req.params.id } });
             if (deleted) {
-                res.status(200).json({ message: 'Producto eliminado exitosamente' });
+                res.status(200).json({ message: "Producto eliminado exitosamente" });
             }
             else {
-                res.status(404).json({ message: 'Producto no encontrado' });
+                res.status(404).json({ message: "Producto no encontrado" });
             }
         }
         catch (error) {
             res.status(500).json({ error: error.message });
         }
     }),
-    partialUpdateProducts: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    partialUpdateProduct: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const products = yield Products_1.default.findByPk(req.params.id);
-            if (!products) {
-                return res.status(404).json({ message: 'Producto no encontrado' });
+            const product = yield Products_1.default.findByPk(req.params.id);
+            if (!product) {
+                return res.status(404).json({ message: "Producto no encontrado" });
             }
             yield Products_1.default.update(req.body, { where: { id: req.params.id } });
-            const updatedProducts = yield Products_1.default.findByPk(req.params.id);
-            res.status(200).json(updatedProducts);
+            const updatedProduct = yield Products_1.default.findByPk(req.params.id);
+            res.status(200).json(updatedProduct);
         }
         catch (error) {
             res.status(500).json({ error: error.message });
         }
-    })
+    }),
 };
-exports.default = productsController;
+exports.default = productController;

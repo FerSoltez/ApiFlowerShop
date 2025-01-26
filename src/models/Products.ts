@@ -1,69 +1,45 @@
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes, Model } from "sequelize";
 import sequelize from '../config/database';
 
-interface ProductsAttributes {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
-  discount: number;
-  quantity: number;
-  description: string;
-}
+class ProductModel extends Model {}
 
-class Products extends Model<ProductsAttributes> implements ProductsAttributes {
-  public id!: number;
-  public name!: string;
-  public price!: number;
-  public image!: string;
-  public discount!: number;
-  public quantity!: number;
-  public description!: string;
-}
-
-Products.init({
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
+ProductModel.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    price: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+    image: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    discount: {
+      type: DataTypes.FLOAT,
+      defaultValue: 0,
+    },
+    quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
   },
-  
-  name: {
-    type: DataTypes.STRING(100),
-    allowNull: false,
-  },
+  {
+    sequelize,
+    modelName: "Product",
+    timestamps: true, // createdAt and updatedAt
+  }
+);
 
-  price: {
-    type: DataTypes.FLOAT,
-    allowNull: false,
-  },
-
-  image: {
-    type: DataTypes.STRING(255),
-    allowNull: false,
-  },
-
-  discount: {
-    type: DataTypes.FLOAT,
-    allowNull: true,
-    defaultValue: 0, // Valor predeterminado de descuento es 0
-  },
-
-  quantity: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-
-  description: {
-    type: DataTypes.STRING(255),
-    allowNull: false,
-  },
-  
-}, {
-  sequelize,
-  modelName: 'Products',
-  tableName: 'Products',
-  timestamps: true,  // Agrega createdAt y updatedAt
-});
-
-export default Products;
+export default ProductModel;
