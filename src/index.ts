@@ -1,12 +1,11 @@
-import express from "express";
+import express, { Application, Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
 import sequelize from "./config/database";
 import cors from "cors";
 import productsRoutes from './routes/ProductsRoutes';
 
 dotenv.config();
-const app = express();
-const PORT = process.env.PORT || 3001;
+const app: Application = express();
 
 // Middlewares  
 app.use(cors());
@@ -15,17 +14,19 @@ app.use(express.json());
 // Routes
 app.use("/api", productsRoutes);
 
-// Database Connection
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log("Database connected");
-  })
-  .catch((err) => {
-    console.error("Unable to connect to the database:", err);
-  });
+// Ruta de prueba
+app.get("/", (req: Request, res: Response, next: NextFunction) => {
+  res.send("¡API en funcionamiento!");
+});
 
-// Start Server
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+// Manejador de errores
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.error(err.stack);
+  res.status(500).send("Algo salió mal");
+});
+
+// Puerto del servidor
+const PORT = process.env.PORT || 3001;
+const server = app.listen(PORT, () => {
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
