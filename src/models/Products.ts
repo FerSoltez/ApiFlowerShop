@@ -37,7 +37,7 @@ ProductModel.init(
   },
   {
     sequelize,
-    modelName: "Product",
+    modelName: "Products",
     timestamps: true, // createdAt and updatedAt
   }
 );
