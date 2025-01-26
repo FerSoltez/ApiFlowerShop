@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const sequelize = new Sequelize(
+export const sequelize = new Sequelize(
   process.env.DB_NAME as string,
   process.env.DB_USER as string,
   process.env.DB_PASSWORD,
@@ -22,5 +22,3 @@ sequelize.authenticate()
   .catch((err) => {
     console.error('Error al conectar a la base de datos:', err);
   });
-
-export default sequelize;

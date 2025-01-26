@@ -1,6 +1,5 @@
 import express, { Application, Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
-import sequelize from "./config/database";
 import cors from "cors";
 import productsRoutes from './routes/ProductsRoutes';
 
