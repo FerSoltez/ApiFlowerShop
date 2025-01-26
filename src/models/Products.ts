@@ -61,8 +61,8 @@ Products.init({
   
 }, {
   sequelize,
-  modelName: 'Producto',
-  tableName: 'Producto',
+  modelName: 'Products',
+  tableName: 'Products',
   timestamps: true,  // Agrega createdAt y updatedAt
 });
 

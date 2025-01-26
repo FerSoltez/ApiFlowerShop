@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import sequelize from "./config/database";
 import cors from "cors";
-import ProductsRoutes from "../src/routes/ProductsRoutes";
+import productsRoutes from './routes/ProductsRoutes';
 
 dotenv.config();
 const app = express();
@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use("/api/productos", ProductsRoutes);
+app.use("/api", productsRoutes);
 
 // Database Connection
 sequelize

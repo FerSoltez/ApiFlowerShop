@@ -13,8 +13,8 @@ const productsController = {
 
   getAllProducts: async (req: Request, res: Response) => {
     try {
-      const productos = await Products.findAll();
-      res.status(200).json(productos);
+      const products = await Products.findAll();
+      res.status(200).json(products);
     } catch (error) {
         res.status(500).json({ error: (error as Error).message });
     }
