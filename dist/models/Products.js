@@ -39,7 +39,8 @@ ProductModel.init({
     },
 }, {
     sequelize: database_1.default,
-    modelName: "Products",
+    modelName: 'Products',
+    tableName: 'Products',
     timestamps: true, // createdAt and updatedAt
 });
 exports.default = ProductModel;

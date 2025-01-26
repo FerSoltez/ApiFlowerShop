@@ -1,7 +1,25 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from '../config/database';
 
-class ProductModel extends Model {}
+interface ProductsAttributes {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+  discount: number;
+  quantity: string;
+  description: string;
+}
+
+class ProductModel extends Model<ProductsAttributes> implements ProductsAttributes {
+  public id!: number;
+  public name!: string;
+  public price!: number;
+  public image!: string;
+  public discount!: number;
+  public quantity!: string;
+  public description!: string;
+}
 
 ProductModel.init(
   {
@@ -37,7 +55,8 @@ ProductModel.init(
   },
   {
     sequelize,
-    modelName: "Products",
+    modelName: 'Products',
+    tableName: 'Products',
     timestamps: true, // createdAt and updatedAt
   }
 );
