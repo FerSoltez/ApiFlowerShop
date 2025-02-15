@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import productsRoutes from './routes/ProductsRoutes';
 import usuariosRoutes from './routes/UsuariosRoutes';
+import localidadesRoutes from './routes/LocalidadesRoutes';
+import municipiosRoutes from './routes/MunicipiosRoutes';
 
 dotenv.config();
 const app: Application = express();
@@ -14,6 +16,8 @@ app.use(express.json());
 // Routes
 app.use("/api", productsRoutes);
 app.use("/api", usuariosRoutes);
+app.use("/api", localidadesRoutes);
+app.use("/api", municipiosRoutes);
 
 // Ruta de prueba
 app.get("/", (req: Request, res: Response, next: NextFunction) => {
