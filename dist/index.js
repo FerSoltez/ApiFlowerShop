@@ -24,7 +24,7 @@ app.use((err, req, res, next) => {
     res.status(500).send("Algo salió mal");
 });
 // Puerto del servidor
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3002;
 const server = app.listen(PORT, () => {
     console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
