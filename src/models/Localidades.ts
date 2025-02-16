@@ -37,7 +37,7 @@ Localidad.init(
   {
     sequelize,
     modelName: "Localidad",
-    tableName: "Localidades",
+    tableName: "localidades",
     timestamps: false,
   }
 );

@@ -29,7 +29,7 @@ Localidad.init({
 }, {
     sequelize: database_1.sequelize,
     modelName: "Localidad",
-    tableName: "Localidades",
+    tableName: "localidades",
     timestamps: false,
 });
 // Definir asociaciones
