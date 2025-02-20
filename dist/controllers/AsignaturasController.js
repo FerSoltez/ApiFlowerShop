@@ -95,19 +95,23 @@ const asignaturaController = {
             res.status(500).json({ error: error.message });
         }
     }),
-    getAsignaturaWithUnidades: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    getAsignaturaByIdWithUnidades: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        const { id_asignaturas } = req.params;
         try {
-            const { id_asignatura } = req.params;
-            const asignatura = yield Asignaturas_1.default.findByPk(id_asignatura, {
-                include: [{
-                        model: UnidadesAp_1.default,
-                        as: 'unidades_aprendizaje'
-                    }]
-            });
+            // Buscar la asignatura por su ID
+            const asignatura = yield Asignaturas_1.default.findByPk(id_asignaturas);
             if (!asignatura) {
                 return res.status(404).json({ message: "Asignatura no encontrada" });
             }
-            res.status(200).json(asignatura);
+            // Obtener todas las unidades de aprendizaje asociadas a la asignatura
+            const unidadesAprendizaje = yield UnidadesAp_1.default.findAll({
+                where: {
+                    id_asignatura: id_asignaturas
+                }
+            });
+            // Organizar los datos de la asignatura y las unidades de aprendizaje juntas
+            const asignaturaConUnidades = Object.assign(Object.assign({}, asignatura.toJSON()), { unidadesAprendizaje });
+            res.status(200).json(asignaturaConUnidades);
         }
         catch (error) {
             res.status(500).json({ error: error.message });

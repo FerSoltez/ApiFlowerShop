@@ -52,7 +52,5 @@ Asignatura.init({
     tableName: "asignaturas",
     timestamps: false,
 });
-// Definir asociaciones
-Asignatura.hasMany(UnidadesAp_1.default, { foreignKey: "id_asignatura", as: "unidades_aprendizaje" });
-UnidadesAp_1.default.belongsTo(Asignatura, { foreignKey: "id_asignatura", as: "asignatura" });
+Asignatura.hasMany(UnidadesAp_1.default, { foreignKey: 'id_asignaturas', as: 'unidadesAp' });
 exports.default = Asignatura;

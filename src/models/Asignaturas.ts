@@ -1,6 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from '../config/database';
-import UnidadAprendizaje from './UnidadesAp';
+import unidadesAP from './UnidadesAp';
 
 interface AsignaturaAttributes {
   id_asignaturas: number;
@@ -73,9 +73,6 @@ Asignatura.init(
     timestamps: false,
   }
 );
-
-// Definir asociaciones
-Asignatura.hasMany(UnidadAprendizaje, { foreignKey: "id_asignatura", as: "unidades_aprendizaje" });
-UnidadAprendizaje.belongsTo(Asignatura, { foreignKey: "id_asignatura", as: "asignatura" });
+Asignatura.hasMany(unidadesAP, { foreignKey: 'id_asignaturas', as: 'unidadesAp' });
 
 export default Asignatura;

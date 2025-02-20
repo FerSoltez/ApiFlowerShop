@@ -80,21 +80,31 @@ const asignaturaController = {
     }
   },
 
-  getAsignaturaWithUnidades: async (req: Request, res: Response) => {
+  getAsignaturaByIdWithUnidades: async (req: Request, res: Response) => {
+    const { id_asignaturas } = req.params;
+
     try {
-      const { id_asignatura } = req.params;
-      const asignatura = await Asignatura.findByPk(id_asignatura, {
-        include: [{
-          model: UnidadAprendizaje,
-          as: 'unidades_aprendizaje'
-        }]
-      });
+      // Buscar la asignatura por su ID
+      const asignatura = await Asignatura.findByPk(id_asignaturas);
 
       if (!asignatura) {
         return res.status(404).json({ message: "Asignatura no encontrada" });
       }
 
-      res.status(200).json(asignatura);
+      // Obtener todas las unidades de aprendizaje asociadas a la asignatura
+      const unidadesAprendizaje = await UnidadAprendizaje.findAll({
+        where: {
+          id_asignatura: id_asignaturas
+        }
+      });
+
+      // Organizar los datos de la asignatura y las unidades de aprendizaje juntas
+      const asignaturaConUnidades = {
+        ...asignatura.toJSON(),
+        unidadesAprendizaje
+      };
+
+      res.status(200).json(asignaturaConUnidades);
     } catch (error) {
       res.status(500).json({ error: (error as Error).message });
     }
