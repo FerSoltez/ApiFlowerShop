@@ -93,11 +93,16 @@ const asignaturaController = {
     getUnidadesByAsignaturaId: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const { id } = req.params;
-            const unidades = yield UnidadesAp_1.default.findAll({ where: { id_asignatura: id } });
-            if (unidades.length === 0) {
-                return res.status(404).json({ message: "No se encontraron unidades de aprendizaje para esta asignatura" });
+            const asignatura = yield Asignaturas_1.default.findByPk(id, {
+                include: [{
+                        model: UnidadesAp_1.default,
+                        as: 'unidades_aprendizaje'
+                    }]
+            });
+            if (!asignatura) {
+                return res.status(404).json({ message: "Asignatura no encontrada" });
             }
-            res.status(200).json(unidades);
+            res.status(200).json(asignatura);
         }
         catch (error) {
             res.status(500).json({ error: error.message });
