@@ -37,7 +37,7 @@ const asignaturaController = {
 
   updateAsignatura: async (req: Request, res: Response) => {
     try {
-      const [updated] = await Asignatura.update(req.body, { where: { id_asignatura: req.params.id } });
+      const [updated] = await Asignatura.update(req.body, { where: { id_asignaturas: req.params.id } });
       if (updated) {
         const updatedAsignatura = await Asignatura.findByPk(req.params.id);
         res.status(200).json(updatedAsignatura);
@@ -51,7 +51,7 @@ const asignaturaController = {
 
   deleteAsignatura: async (req: Request, res: Response) => {
     try {
-      const deleted = await Asignatura.destroy({ where: { id_asignatura: req.params.id } });
+      const deleted = await Asignatura.destroy({ where: { id_asignaturas: req.params.id } });
       if (deleted) {
         res.status(200).json({ message: "Asignatura eliminada exitosamente" });
       } else {
@@ -68,7 +68,7 @@ const asignaturaController = {
       if (!asignatura) {
         return res.status(404).json({ message: "Asignatura no encontrada" });
       }
-      await Asignatura.update(req.body, { where: { id_asignatura: req.params.id } });
+      await Asignatura.update(req.body, { where: { id_asignaturas: req.params.id } });
       const updatedAsignatura = await Asignatura.findByPk(req.params.id);
       res.status(200).json(updatedAsignatura);
     } catch (error) {

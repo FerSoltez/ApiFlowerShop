@@ -4,14 +4,24 @@ import Asignatura from "./Asignaturas";
 
 interface UnidadAprendizajeAttributes {
   id_unidad: number;
-  nombre: string;
   id_asignatura: number;
+  Competencia?: string;
+  Semanas?: number;
+  Resultado_aprendizaje?: string;
+  Tareas_integradoras?: string;
+  Porcentaje_saber?: number;
+  Porcentaje_saber_ser?: number;
 }
 
 class UnidadAprendizaje extends Model<UnidadAprendizajeAttributes> implements UnidadAprendizajeAttributes {
   public id_unidad!: number;
-  public nombre!: string;
   public id_asignatura!: number;
+  public Competencia?: string;
+  public Semanas?: number;
+  public Resultado_aprendizaje?: string;
+  public Tareas_integradoras?: string;
+  public Porcentaje_saber?: number;
+  public Porcentaje_saber_ser?: number;
 }
 
 UnidadAprendizaje.init(
@@ -21,17 +31,37 @@ UnidadAprendizaje.init(
       autoIncrement: true,
       primaryKey: true,
     },
-    nombre: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     id_asignatura: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: Asignatura,
-        key: "id_asignatura",
+        key: "id_asignaturas",
       },
+    },
+    Competencia: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    Semanas: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    Resultado_aprendizaje: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    Tareas_integradoras: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    Porcentaje_saber: {
+      type: DataTypes.DECIMAL(5, 2),
+      allowNull: true,
+    },
+    Porcentaje_saber_ser: {
+      type: DataTypes.DECIMAL(5, 2),
+      allowNull: true,
     },
   },
   {

@@ -14,17 +14,37 @@ UnidadAprendizaje.init({
         autoIncrement: true,
         primaryKey: true,
     },
-    nombre: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
-    },
     id_asignatura: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: Asignaturas_1.default,
-            key: "id_asignatura",
+            key: "id_asignaturas",
         },
+    },
+    Competencia: {
+        type: sequelize_1.DataTypes.TEXT,
+        allowNull: true,
+    },
+    Semanas: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: true,
+    },
+    Resultado_aprendizaje: {
+        type: sequelize_1.DataTypes.TEXT,
+        allowNull: true,
+    },
+    Tareas_integradoras: {
+        type: sequelize_1.DataTypes.TEXT,
+        allowNull: true,
+    },
+    Porcentaje_saber: {
+        type: sequelize_1.DataTypes.DECIMAL(5, 2),
+        allowNull: true,
+    },
+    Porcentaje_saber_ser: {
+        type: sequelize_1.DataTypes.DECIMAL(5, 2),
+        allowNull: true,
     },
 }, {
     sequelize: database_1.sequelize,

@@ -49,7 +49,7 @@ const asignaturaController = {
     }),
     updateAsignatura: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const [updated] = yield Asignaturas_1.default.update(req.body, { where: { id_asignatura: req.params.id } });
+            const [updated] = yield Asignaturas_1.default.update(req.body, { where: { id_asignaturas: req.params.id } });
             if (updated) {
                 const updatedAsignatura = yield Asignaturas_1.default.findByPk(req.params.id);
                 res.status(200).json(updatedAsignatura);
@@ -64,7 +64,7 @@ const asignaturaController = {
     }),
     deleteAsignatura: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const deleted = yield Asignaturas_1.default.destroy({ where: { id_asignatura: req.params.id } });
+            const deleted = yield Asignaturas_1.default.destroy({ where: { id_asignaturas: req.params.id } });
             if (deleted) {
                 res.status(200).json({ message: "Asignatura eliminada exitosamente" });
             }
@@ -82,7 +82,7 @@ const asignaturaController = {
             if (!asignatura) {
                 return res.status(404).json({ message: "Asignatura no encontrada" });
             }
-            yield Asignaturas_1.default.update(req.body, { where: { id_asignatura: req.params.id } });
+            yield Asignaturas_1.default.update(req.body, { where: { id_asignaturas: req.params.id } });
             const updatedAsignatura = yield Asignaturas_1.default.findByPk(req.params.id);
             res.status(200).json(updatedAsignatura);
         }
