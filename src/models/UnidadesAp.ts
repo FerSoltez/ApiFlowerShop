@@ -1,6 +1,6 @@
 import { DataTypes, Model } from "sequelize";
-import { sequelize } from "../config/database";
-import Asignatura from "./Asignaturas";
+import { sequelize } from '../config/database';
+import Asignatura from './Asignaturas';
 
 interface UnidadAprendizajeAttributes {
   id_unidad: number;

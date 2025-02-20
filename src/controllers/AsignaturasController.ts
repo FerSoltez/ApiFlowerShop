@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import Asignatura from "../models/Asignaturas";
-import UnidadAp from "../models/UnidadesAp";
-
+import UnidadAprendizaje from "../models/UnidadesAp";
 
 const asignaturaController = {
   createAsignatura: async (req: Request, res: Response) => {
@@ -76,16 +75,14 @@ const asignaturaController = {
     }
   },
 
-  getUnidadesByAsignaturaId: async (req: Request, res: Response) => {
+  getAsignaturaWithUnidades: async (req: Request, res: Response) => {
     try {
-      const { id } = req.params;
-      const asignatura = await Asignatura.findByPk(id, {
-        include: [
-          {
-            model: UnidadAp,
-            as: "unidades",
-          },
-        ],
+      const { id_asignatura } = req.params;
+      const asignatura = await Asignatura.findByPk(id_asignatura, {
+        include: [{
+          model: UnidadAprendizaje,
+          as: 'unidades_aprendizaje'
+        }]
       });
 
       if (!asignatura) {

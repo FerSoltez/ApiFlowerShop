@@ -1,11 +1,7 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const database_1 = require("../config/database");
-const UnidadesAp_1 = __importDefault(require("./UnidadesAp"));
 class Asignatura extends sequelize_1.Model {
 }
 Asignatura.init({
@@ -53,5 +49,4 @@ Asignatura.init({
     timestamps: false,
 });
 // Definir asociaciones
-Asignatura.hasMany(UnidadesAp_1.default, { foreignKey: "id_asignatura", as: "unidades_aprendizaje" });
 exports.default = Asignatura;
