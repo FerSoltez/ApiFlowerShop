@@ -5,6 +5,8 @@ import productsRoutes from './routes/ProductsRoutes';
 import usuariosRoutes from './routes/UsuariosRoutes';
 import localidadesRoutes from './routes/LocalidadesRoutes';
 import municipiosRoutes from './routes/MunicipiosRoutes';
+import asignaturasRoutes from './routes/AsignaturasRoutes';
+import unidadesapRoutes from './routes/UnidadesApRoutes';
 
 dotenv.config();
 const app: Application = express();
@@ -18,6 +20,8 @@ app.use("/api", productsRoutes);
 app.use("/api", usuariosRoutes);
 app.use("/api", localidadesRoutes);
 app.use("/api", municipiosRoutes);
+app.use("/api", asignaturasRoutes);
+app.use("/api", unidadesapRoutes);
 
 // Ruta de prueba
 app.get("/", (req: Request, res: Response, next: NextFunction) => {
