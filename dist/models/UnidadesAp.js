@@ -10,7 +10,7 @@ UnidadAprendizaje.init({
         autoIncrement: true,
         primaryKey: true,
     },
-    id_asignaturas: {
+    id_asignatura: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -49,3 +49,4 @@ UnidadAprendizaje.init({
     timestamps: false,
 });
 exports.default = UnidadAprendizaje;
+// Definir asociaciones

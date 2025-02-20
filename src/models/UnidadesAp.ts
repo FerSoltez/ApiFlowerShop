@@ -4,7 +4,7 @@ import Asignatura from './Asignaturas';
 
 interface UnidadAprendizajeAttributes {
   id_unidad: number;
-  id_asignaturas: number;
+  id_asignatura: number;
   Competencia?: string;
   Semanas?: number;
   Resultado_aprendizaje?: string;
@@ -15,7 +15,7 @@ interface UnidadAprendizajeAttributes {
 
 class UnidadAprendizaje extends Model<UnidadAprendizajeAttributes> implements UnidadAprendizajeAttributes {
   public id_unidad!: number;
-  public id_asignaturas!: number;
+  public id_asignatura!: number;
   public Competencia?: string;
   public Semanas?: number;
   public Resultado_aprendizaje?: string;
@@ -31,7 +31,7 @@ UnidadAprendizaje.init(
       autoIncrement: true,
       primaryKey: true,
     },
-    id_asignaturas: {
+    id_asignatura: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -74,3 +74,4 @@ UnidadAprendizaje.init(
 
 export default UnidadAprendizaje;
 
+// Definir asociaciones
