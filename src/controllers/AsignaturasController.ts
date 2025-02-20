@@ -76,18 +76,16 @@ const asignaturaController = {
     }
   },
 
-  getAsignaturaWithUnidades: async (req: Request, res: Response) => {
+  getUnidadesByAsignaturaId: async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
-      const asignatura = await Asignatura.findByPk(id, {
-        include: [{ model: UnidadAp, as: "unidades" }],
-      });
+      const unidades = await UnidadAp.findAll({ where: { id_asignatura: id } });
 
-      if (!asignatura) {
-        return res.status(404).json({ message: "Asignatura no encontrada" });
+      if (unidades.length === 0) {
+        return res.status(404).json({ message: "No se encontraron unidades de aprendizaje para esta asignatura" });
       }
 
-      res.status(200).json(asignatura);
+      res.status(200).json(unidades);
     } catch (error) {
       res.status(500).json({ error: (error as Error).message });
     }
