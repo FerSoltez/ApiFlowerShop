@@ -106,7 +106,7 @@ const asignaturaController = {
             // Obtener todas las unidades de aprendizaje asociadas a la asignatura
             const unidadesAprendizaje = yield UnidadesAp_1.default.findAll({
                 where: {
-                    id_asignatura: id_asignaturas
+                    id_asignaturas: id_asignaturas
                 }
             });
             // Organizar los datos de la asignatura y las unidades de aprendizaje juntas

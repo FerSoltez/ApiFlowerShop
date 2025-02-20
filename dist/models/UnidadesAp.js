@@ -10,7 +10,7 @@ UnidadAprendizaje.init({
         autoIncrement: true,
         primaryKey: true,
     },
-    id_asignatura: {
+    id_asignaturas: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
         references: {
