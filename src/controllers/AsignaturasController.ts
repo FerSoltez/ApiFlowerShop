@@ -89,7 +89,7 @@ const asignaturaController = {
       // Obtener todas las unidades de aprendizaje asociadas a la asignatura
       const unidadesAprendizaje = await UnidadAprendizaje.findAll({
         where: {
-          id_asignatura: id_asignaturas
+          id_asignaturas: id_asignaturas
         }
       });
 
