@@ -94,10 +94,12 @@ const asignaturaController = {
         try {
             const { id } = req.params;
             const asignatura = yield Asignaturas_1.default.findByPk(id, {
-                include: [{
+                include: [
+                    {
                         model: UnidadesAp_1.default,
-                        as: 'unidades_aprendizaje'
-                    }]
+                        as: "unidades",
+                    },
+                ],
             });
             if (!asignatura) {
                 return res.status(404).json({ message: "Asignatura no encontrada" });
@@ -107,6 +109,6 @@ const asignaturaController = {
         catch (error) {
             res.status(500).json({ error: error.message });
         }
-    })
+    }),
 };
 exports.default = asignaturaController;

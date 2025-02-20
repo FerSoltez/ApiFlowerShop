@@ -80,10 +80,12 @@ const asignaturaController = {
     try {
       const { id } = req.params;
       const asignatura = await Asignatura.findByPk(id, {
-        include: [{
-          model: UnidadAp,
-          as: 'unidades_aprendizaje'
-        }]
+        include: [
+          {
+            model: UnidadAp,
+            as: "unidades",
+          },
+        ],
       });
 
       if (!asignatura) {
@@ -94,7 +96,7 @@ const asignaturaController = {
     } catch (error) {
       res.status(500).json({ error: (error as Error).message });
     }
-  }
+  },
 };
 
 export default asignaturaController;
