@@ -54,4 +54,4 @@ Asignatura.init({
 });
 exports.default = Asignatura;
 // Definir asociaciones
-Asignatura.hasMany(UnidadesAp_1.default, { foreignKey: "id_asignatura", as: "unidadesAp" });
+Asignatura.hasMany(UnidadesAp_1.default, { foreignKey: "id_asignaturas", as: "unidadesAp" });
