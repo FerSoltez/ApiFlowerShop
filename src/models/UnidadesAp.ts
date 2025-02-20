@@ -35,7 +35,7 @@ UnidadAprendizaje.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: Asignatura,
+        model: 'Asignaturas', // Referencia al nombre de la tabla
         key: "id_asignaturas",
       },
     },
@@ -72,7 +72,5 @@ UnidadAprendizaje.init(
   }
 );
 
-// Definir asociaciones
-UnidadAprendizaje.belongsTo(Asignatura, { foreignKey: "id_asignatura", as: "asignatura" });
-
 export default UnidadAprendizaje;
+
