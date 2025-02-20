@@ -23,12 +23,7 @@ const asignaturaController = {
 
   getAsignaturaById: async (req: Request, res: Response) => {
     try {
-      const asignatura = await Asignatura.findByPk(req.params.id, {
-        include: [{
-          model: UnidadAprendizaje,
-          as: 'unidades_aprendizaje'
-        }]
-      });
+      const asignatura = await Asignatura.findByPk(req.params.id);
       if (asignatura) {
         res.status(200).json(asignatura);
       } else {
@@ -101,7 +96,7 @@ const asignaturaController = {
       // Organizar los datos de la asignatura y las unidades de aprendizaje juntas
       const asignaturaConUnidades = {
         ...asignatura.toJSON(),
-        unidadesAprendizaje
+        unidadesAp: unidadesAprendizaje
       };
 
       res.status(200).json(asignaturaConUnidades);

@@ -35,12 +35,7 @@ const asignaturaController = {
     }),
     getAsignaturaById: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const asignatura = yield Asignaturas_1.default.findByPk(req.params.id, {
-                include: [{
-                        model: UnidadesAp_1.default,
-                        as: 'unidades_aprendizaje'
-                    }]
-            });
+            const asignatura = yield Asignaturas_1.default.findByPk(req.params.id);
             if (asignatura) {
                 res.status(200).json(asignatura);
             }
@@ -110,7 +105,7 @@ const asignaturaController = {
                 }
             });
             // Organizar los datos de la asignatura y las unidades de aprendizaje juntas
-            const asignaturaConUnidades = Object.assign(Object.assign({}, asignatura.toJSON()), { unidadesAprendizaje });
+            const asignaturaConUnidades = Object.assign(Object.assign({}, asignatura.toJSON()), { unidadesAp: unidadesAprendizaje });
             res.status(200).json(asignaturaConUnidades);
         }
         catch (error) {
