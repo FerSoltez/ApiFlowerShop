@@ -22,14 +22,29 @@ const asignaturaController = {
   },
 
   getAsignaturaById: async (req: Request, res: Response) => {
+    const { id } = req.params;
+
     try {
-      const asignatura = await Asignatura.findByPk(req.params.id);
-      if (asignatura) {
-        res.status(200).json(asignatura);
-      } else {
-        res.status(404).json({ message: "Asignatura no encontrada" });
+      console.log(`Buscando asignatura con id: ${id}`);
+      
+      // Buscar la asignatura por su ID
+      const asignatura = await Asignatura.findByPk(id, {
+        include: [{
+          model: UnidadAprendizaje,
+          as: 'unidadesAp'
+        }]
+      });
+
+      if (!asignatura) {
+        console.log(`Asignatura con id: ${id} no encontrada`);
+        return res.status(404).json({ message: "Asignatura no encontrada" });
       }
+
+      console.log(`Asignatura encontrada: ${JSON.stringify(asignatura)}`);
+
+      res.status(200).json(asignatura);
     } catch (error) {
+      console.error(`Error al obtener la asignatura con unidades: ${(error as Error).message}`);
       res.status(500).json({ error: (error as Error).message });
     }
   },

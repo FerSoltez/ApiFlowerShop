@@ -34,16 +34,25 @@ const asignaturaController = {
         }
     }),
     getAsignaturaById: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        const { id } = req.params;
         try {
-            const asignatura = yield Asignaturas_1.default.findByPk(req.params.id);
-            if (asignatura) {
-                res.status(200).json(asignatura);
+            console.log(`Buscando asignatura con id: ${id}`);
+            // Buscar la asignatura por su ID
+            const asignatura = yield Asignaturas_1.default.findByPk(id, {
+                include: [{
+                        model: UnidadesAp_1.default,
+                        as: 'unidadesAp'
+                    }]
+            });
+            if (!asignatura) {
+                console.log(`Asignatura con id: ${id} no encontrada`);
+                return res.status(404).json({ message: "Asignatura no encontrada" });
             }
-            else {
-                res.status(404).json({ message: "Asignatura no encontrada" });
-            }
+            console.log(`Asignatura encontrada: ${JSON.stringify(asignatura)}`);
+            res.status(200).json(asignatura);
         }
         catch (error) {
+            console.error(`Error al obtener la asignatura con unidades: ${error.message}`);
             res.status(500).json({ error: error.message });
         }
     }),
