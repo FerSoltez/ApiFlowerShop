@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const Asignaturas_1 = __importDefault(require("../models/Asignaturas"));
 const UnidadesAp_1 = __importDefault(require("../models/UnidadesAp"));
+const database_1 = require("../config/database");
 const asignaturaController = {
     createAsignatura: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
@@ -72,16 +73,30 @@ const asignaturaController = {
         }
     }),
     deleteAsignatura: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        const transaction = yield database_1.sequelize.transaction();
         try {
-            const deleted = yield Asignaturas_1.default.destroy({ where: { id_asignaturas: req.params.id } });
+            const { id } = req.params;
+            // Eliminar las unidades de aprendizaje asociadas a la asignatura
+            const unidadesDeleted = yield UnidadesAp_1.default.destroy({
+                where: { id_asignaturas: id },
+                transaction
+            });
+            // Eliminar la asignatura
+            const deleted = yield Asignaturas_1.default.destroy({
+                where: { id_asignaturas: id },
+                transaction
+            });
             if (deleted) {
-                res.status(200).json({ message: "Asignatura eliminada exitosamente" });
+                yield transaction.commit();
+                res.status(200).json({ message: "Asignatura y unidades eliminadas exitosamente" });
             }
             else {
+                yield transaction.rollback();
                 res.status(404).json({ message: "Asignatura no encontrada" });
             }
         }
         catch (error) {
+            yield transaction.rollback();
             res.status(500).json({ error: error.message });
         }
     }),
@@ -99,33 +114,5 @@ const asignaturaController = {
             res.status(500).json({ error: error.message });
         }
     }),
-    getAsignaturaByIdWithUnidades: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        const { id_asignaturas } = req.params;
-        try {
-            console.log(`Buscando asignatura con id_asignaturas: ${id_asignaturas}`);
-            // Buscar la asignatura por su ID
-            const asignatura = yield Asignaturas_1.default.findByPk(id_asignaturas);
-            if (!asignatura) {
-                console.log(`Asignatura con id_asignaturas: ${id_asignaturas} no encontrada`);
-                return res.status(404).json({ message: "Asignatura no encontrada" });
-            }
-            console.log(`Asignatura encontrada: ${JSON.stringify(asignatura)}`);
-            // Obtener todas las unidades de aprendizaje asociadas a la asignatura
-            const unidadesAprendizaje = yield UnidadesAp_1.default.findAll({
-                where: {
-                    id_asignaturas: id_asignaturas
-                }
-            });
-            console.log(`Unidades de aprendizaje encontradas: ${JSON.stringify(unidadesAprendizaje)}`);
-            // Organizar los datos de la asignatura y las unidades de aprendizaje juntas
-            const asignaturaConUnidades = Object.assign(Object.assign({}, asignatura.toJSON()), { unidadesAp: unidadesAprendizaje });
-            console.log(`Datos combinados: ${JSON.stringify(asignaturaConUnidades)}`);
-            res.status(200).json(asignaturaConUnidades);
-        }
-        catch (error) {
-            console.error(`Error al obtener la asignatura con unidades: ${error.message}`);
-            res.status(500).json({ error: error.message });
-        }
-    })
 };
 exports.default = asignaturaController;

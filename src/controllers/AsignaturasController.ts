@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Asignatura from "../models/Asignaturas";
 import UnidadAprendizaje from "../models/UnidadesAp";
+import { sequelize } from '../config/database';
 
 const asignaturaController = {
   createAsignatura: async (req: Request, res: Response) => {
@@ -64,14 +65,31 @@ const asignaturaController = {
   },
 
   deleteAsignatura: async (req: Request, res: Response) => {
+    const transaction = await sequelize.transaction();
     try {
-      const deleted = await Asignatura.destroy({ where: { id_asignaturas: req.params.id } });
+      const { id } = req.params;
+
+      // Eliminar las unidades de aprendizaje asociadas a la asignatura
+      const unidadesDeleted = await UnidadAprendizaje.destroy({
+        where: { id_asignaturas: id },
+        transaction
+      });
+
+      // Eliminar la asignatura
+      const deleted = await Asignatura.destroy({
+        where: { id_asignaturas: id },
+        transaction
+      });
+
       if (deleted) {
-        res.status(200).json({ message: "Asignatura eliminada exitosamente" });
+        await transaction.commit();
+        res.status(200).json({ message: "Asignatura y unidades eliminadas exitosamente" });
       } else {
+        await transaction.rollback();
         res.status(404).json({ message: "Asignatura no encontrada" });
       }
     } catch (error) {
+      await transaction.rollback();
       res.status(500).json({ error: (error as Error).message });
     }
   },
@@ -90,45 +108,6 @@ const asignaturaController = {
     }
   },
 
-  getAsignaturaByIdWithUnidades: async (req: Request, res: Response) => {
-    const { id_asignaturas } = req.params;
-
-    try {
-      console.log(`Buscando asignatura con id_asignaturas: ${id_asignaturas}`);
-      
-      // Buscar la asignatura por su ID
-      const asignatura = await Asignatura.findByPk(id_asignaturas);
-
-      if (!asignatura) {
-        console.log(`Asignatura con id_asignaturas: ${id_asignaturas} no encontrada`);
-        return res.status(404).json({ message: "Asignatura no encontrada" });
-      }
-
-      console.log(`Asignatura encontrada: ${JSON.stringify(asignatura)}`);
-
-      // Obtener todas las unidades de aprendizaje asociadas a la asignatura
-      const unidadesAprendizaje = await UnidadAprendizaje.findAll({
-        where: {
-          id_asignaturas: id_asignaturas
-        }
-      });
-
-      console.log(`Unidades de aprendizaje encontradas: ${JSON.stringify(unidadesAprendizaje)}`);
-
-      // Organizar los datos de la asignatura y las unidades de aprendizaje juntas
-      const asignaturaConUnidades = {
-        ...asignatura.toJSON(),
-        unidadesAp: unidadesAprendizaje
-      };
-
-      console.log(`Datos combinados: ${JSON.stringify(asignaturaConUnidades)}`);
-
-      res.status(200).json(asignaturaConUnidades);
-    } catch (error) {
-      console.error(`Error al obtener la asignatura con unidades: ${(error as Error).message}`);
-      res.status(500).json({ error: (error as Error).message });
-    }
-  }
 };
 
 export default asignaturaController;

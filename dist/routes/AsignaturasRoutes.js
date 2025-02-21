@@ -12,5 +12,4 @@ router.get("/asignaturas/:id", AsignaturasController_1.default.getAsignaturaById
 router.put("/asignaturas/:id", AsignaturasController_1.default.updateAsignatura);
 router.patch("/asignaturas/:id", AsignaturasController_1.default.updateAsignatura);
 router.delete("/asignaturas/:id", AsignaturasController_1.default.deleteAsignatura);
-router.get("/asignaturas/:id/unidades", AsignaturasController_1.default.getAsignaturaByIdWithUnidades);
 exports.default = router;
