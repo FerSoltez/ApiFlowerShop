@@ -22,7 +22,7 @@ const userController = {
     }
   },
 
-  getUserById: async (req: Request, res: Response) => {
+    getUserById: async (req: Request, res: Response) => {
     const { user_id } = req.params;
 
     try {

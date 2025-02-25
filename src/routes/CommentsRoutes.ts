@@ -5,7 +5,7 @@ const router = Router();
 
 router.post("/comments", commentController.createComment);
 router.get("/comments", commentController.getComments);
-router.get("/comments/:id_comment", commentController.getCommentById);
+router.get("/comments/:id_comment", commentController.getCommentById as any);
 router.put("/comments/:id_comment", commentController.updateComment);
 router.patch("/comments/:id_comment", commentController.partialUpdateComment as any);
 router.delete("/comments/:id_comment", commentController.deleteComment);

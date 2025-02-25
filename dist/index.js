@@ -12,6 +12,8 @@ const LocalidadesRoutes_1 = __importDefault(require("./routes/LocalidadesRoutes"
 const MunicipiosRoutes_1 = __importDefault(require("./routes/MunicipiosRoutes"));
 const AsignaturasRoutes_1 = __importDefault(require("./routes/AsignaturasRoutes"));
 const UnidadesApRoutes_1 = __importDefault(require("./routes/UnidadesApRoutes"));
+const UsersRoutes_1 = __importDefault(require("./routes/UsersRoutes"));
+const CommentsRoutes_1 = __importDefault(require("./routes/CommentsRoutes"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 // Middlewares  
@@ -24,6 +26,8 @@ app.use("/api", LocalidadesRoutes_1.default);
 app.use("/api", MunicipiosRoutes_1.default);
 app.use("/api", AsignaturasRoutes_1.default);
 app.use("/api", UnidadesApRoutes_1.default);
+app.use("/api", UsersRoutes_1.default);
+app.use("/api", CommentsRoutes_1.default);
 // Ruta de prueba
 app.get("/", (req, res, next) => {
     res.send("¡API en funcionamiento!");
