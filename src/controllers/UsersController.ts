@@ -22,7 +22,7 @@ const userController = {
     }
   },
 
- getUserLogin: async (req: Request, res: Response) => {
+  getUserLogin: async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
     try {
@@ -56,7 +56,7 @@ const userController = {
       res.status(500).json({ error: (error as Error).message });
     }
   },
-  
+
   updateUser: async (req: Request, res: Response) => {
     try {
       const [updated] = await User.update(req.body, { where: { user_id: req.params.user_id } });

@@ -14,7 +14,13 @@ const commentController = {
 
   getComments: async (_req: Request, res: Response) => {
     try {
-      const comments = await Comment.findAll();
+      const comments = await Comment.findAll({
+        include: [{
+          model: User,
+          attributes: ['user_name'],
+          as: 'user'
+        }]
+      });
       res.status(200).json(comments);
     } catch (error) {
       res.status(500).json({ error: (error as Error).message });

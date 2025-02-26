@@ -26,7 +26,13 @@ const commentController = {
     }),
     getComments: (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const comments = yield Comments_1.default.findAll();
+            const comments = yield Comments_1.default.findAll({
+                include: [{
+                        model: Userss_1.default,
+                        attributes: ['user_name'],
+                        as: 'user'
+                    }]
+            });
             res.status(200).json(comments);
         }
         catch (error) {
