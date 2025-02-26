@@ -38,9 +38,9 @@ const userController = {
         const { email, password } = req.body;
         try {
             console.log(`Buscando usuario con email: ${email}`);
-            // Buscar el usuario por su email y password e incluir los comentarios asociados
+            // Buscar el usuario por su email
             const user = yield Userss_1.default.findOne({
-                where: { email, password },
+                where: { email },
                 include: [{
                         model: Comments_1.default,
                         as: 'comments'
@@ -49,6 +49,11 @@ const userController = {
             if (!user) {
                 console.log(`Usuario con email: ${email} no encontrado`);
                 return res.status(404).json({ message: "Usuario no encontrado" });
+            }
+            // Verificar la contraseña
+            if (user.password !== password) {
+                console.log(`Contraseña incorrecta para el usuario con email: ${email}`);
+                return res.status(401).json({ message: "Contraseña incorrecta" });
             }
             console.log(`Usuario encontrado: ${JSON.stringify(user)}`);
             res.status(200).json(user);

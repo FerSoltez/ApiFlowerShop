@@ -22,15 +22,15 @@ const userController = {
     }
   },
 
-  getUserLogin: async (req: Request, res: Response) => {
+ getUserLogin: async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
     try {
       console.log(`Buscando usuario con email: ${email}`);
 
-      // Buscar el usuario por su email y password e incluir los comentarios asociados
+      // Buscar el usuario por su email
       const user = await User.findOne({
-        where: { email, password },
+        where: { email },
         include: [{
           model: Comment,
           as: 'comments'
@@ -42,6 +42,12 @@ const userController = {
         return res.status(404).json({ message: "Usuario no encontrado" });
       }
 
+      // Verificar la contraseña
+      if (user.password !== password) {
+        console.log(`Contraseña incorrecta para el usuario con email: ${email}`);
+        return res.status(401).json({ message: "Contraseña incorrecta" });
+      }
+
       console.log(`Usuario encontrado: ${JSON.stringify(user)}`);
 
       res.status(200).json(user);
@@ -50,7 +56,7 @@ const userController = {
       res.status(500).json({ error: (error as Error).message });
     }
   },
-
+  
   updateUser: async (req: Request, res: Response) => {
     try {
       const [updated] = await User.update(req.body, { where: { user_id: req.params.user_id } });
