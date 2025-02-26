@@ -8,7 +8,7 @@ const UsersController_1 = __importDefault(require("../controllers/UsersControlle
 const router = (0, express_1.Router)();
 router.post("/users", UsersController_1.default.createUser);
 router.get("/users", UsersController_1.default.getUsers);
-router.get("/users/:user_id", UsersController_1.default.getUserById);
+router.get("/userslogin", UsersController_1.default.getUserLogin);
 router.put("/users/:user_id", UsersController_1.default.updateUser);
 router.patch("/users/:id_comment", UsersController_1.default.partialUpdateUser);
 router.delete("/users/:user_id", UsersController_1.default.deleteUser);

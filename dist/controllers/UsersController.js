@@ -34,7 +34,7 @@ const userController = {
             res.status(500).json({ error: error.message });
         }
     }),
-    getUserById: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    getUserLogin: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { email, password } = req.body;
         try {
             console.log(`Buscando usuario con email: ${email}`);
