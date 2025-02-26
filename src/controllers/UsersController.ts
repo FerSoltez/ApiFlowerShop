@@ -22,14 +22,15 @@ const userController = {
     }
   },
 
-    getUserById: async (req: Request, res: Response) => {
-    const { user_id } = req.params;
+  getUserById: async (req: Request, res: Response) => {
+    const { email, password } = req.body;
 
     try {
-      console.log(`Buscando usuario con id: ${user_id}`);
-      
-      // Buscar el usuario por su ID e incluir los comentarios asociados
-      const user = await User.findByPk(user_id, {
+      console.log(`Buscando usuario con email: ${email}`);
+
+      // Buscar el usuario por su email y password e incluir los comentarios asociados
+      const user = await User.findOne({
+        where: { email, password },
         include: [{
           model: Comment,
           as: 'comments'
@@ -37,7 +38,7 @@ const userController = {
       });
 
       if (!user) {
-        console.log(`Usuario con id: ${user_id} no encontrado`);
+        console.log(`Usuario con email: ${email} no encontrado`);
         return res.status(404).json({ message: "Usuario no encontrado" });
       }
 

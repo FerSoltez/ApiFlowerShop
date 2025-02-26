@@ -35,18 +35,19 @@ const userController = {
         }
     }),
     getUserById: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        const { user_id } = req.params;
+        const { email, password } = req.body;
         try {
-            console.log(`Buscando usuario con id: ${user_id}`);
-            // Buscar el usuario por su ID e incluir los comentarios asociados
-            const user = yield Userss_1.default.findByPk(user_id, {
+            console.log(`Buscando usuario con email: ${email}`);
+            // Buscar el usuario por su email y password e incluir los comentarios asociados
+            const user = yield Userss_1.default.findOne({
+                where: { email, password },
                 include: [{
                         model: Comments_1.default,
                         as: 'comments'
                     }]
             });
             if (!user) {
-                console.log(`Usuario con id: ${user_id} no encontrado`);
+                console.log(`Usuario con email: ${email} no encontrado`);
                 return res.status(404).json({ message: "Usuario no encontrado" });
             }
             console.log(`Usuario encontrado: ${JSON.stringify(user)}`);
