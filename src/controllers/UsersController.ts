@@ -6,7 +6,7 @@ import { sequelize } from '../config/database';
 const userController = {
   createUser: async (req: Request, res: Response) => {
     try {
-      const newUser = await User.create(req.body);
+      const newUser = await User.create(req.body, { ignoreDuplicates: true });
       res.status(201).json(newUser);
     } catch (error) {
       res.status(500).json({ error: (error as Error).message });

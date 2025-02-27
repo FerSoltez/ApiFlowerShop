@@ -18,7 +18,7 @@ const database_1 = require("../config/database");
 const userController = {
     createUser: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const newUser = yield Userss_1.default.create(req.body);
+            const newUser = yield Userss_1.default.create(req.body, { ignoreDuplicates: true });
             res.status(201).json(newUser);
         }
         catch (error) {
