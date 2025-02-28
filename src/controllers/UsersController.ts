@@ -10,7 +10,7 @@ const userController = {
     try {
       // Encriptar la contraseña
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
-      const newUser = await User.create({ ...req.body, password: hashedPassword });
+      const newUser = await User.create({ ...req.body, password: hashedPassword, attempts: 3 });
       res.status(201).json(newUser);
     } catch (error) {
       res.status(500).json({ error: (error as Error).message });

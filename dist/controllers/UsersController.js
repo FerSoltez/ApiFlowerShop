@@ -21,7 +21,7 @@ const userController = {
         try {
             // Encriptar la contraseña
             const hashedPassword = yield bcryptjs_1.default.hash(req.body.password, 10);
-            const newUser = yield Userss_1.default.create(Object.assign(Object.assign({}, req.body), { password: hashedPassword }));
+            const newUser = yield Userss_1.default.create(Object.assign(Object.assign({}, req.body), { password: hashedPassword, attempts: 3 }));
             res.status(201).json(newUser);
         }
         catch (error) {
