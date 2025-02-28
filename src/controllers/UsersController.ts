@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import User from "../models/Userss";
 import Comment from "../models/Comments";
 import { sequelize } from '../config/database';
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 
 const userController = {

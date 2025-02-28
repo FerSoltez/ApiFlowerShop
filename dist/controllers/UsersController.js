@@ -15,12 +15,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Userss_1 = __importDefault(require("../models/Userss"));
 const Comments_1 = __importDefault(require("../models/Comments"));
 const database_1 = require("../config/database");
-const bcrypt_1 = __importDefault(require("bcrypt"));
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const userController = {
     createUser: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             // Encriptar la contraseña
-            const hashedPassword = yield bcrypt_1.default.hash(req.body.password, 10);
+            const hashedPassword = yield bcryptjs_1.default.hash(req.body.password, 10);
             const newUser = yield Userss_1.default.create(Object.assign(Object.assign({}, req.body), { password: hashedPassword }));
             res.status(201).json(newUser);
         }
@@ -54,7 +54,7 @@ const userController = {
                 return res.status(404).json({ message: "Usuario no encontrado" });
             }
             // Verificar la contraseña
-            const isPasswordValid = yield bcrypt_1.default.compare(password, user.password);
+            const isPasswordValid = yield bcryptjs_1.default.compare(password, user.password);
             if (!isPasswordValid) {
                 console.log(`Contraseña incorrecta para el usuario con email: ${email}`);
                 // Restar un intento
