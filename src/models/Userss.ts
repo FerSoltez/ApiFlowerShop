@@ -6,6 +6,7 @@ interface UserAttributes {
   user_name: string;
   email: string;
   password: string;
+  attempts: number;
 }
 
 class User extends Model<UserAttributes> implements UserAttributes {
@@ -13,6 +14,7 @@ class User extends Model<UserAttributes> implements UserAttributes {
   public user_name!: string;
   public email!: string;
   public password!: string;
+  public attempts!: number;
 }
 
 User.init(
@@ -34,6 +36,11 @@ User.init(
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    attempts: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
     },
   },
   {

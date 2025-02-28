@@ -2,11 +2,15 @@ import { Request, Response } from "express";
 import User from "../models/Userss";
 import Comment from "../models/Comments";
 import { sequelize } from '../config/database';
+import bcrypt from "bcrypt";
+
 
 const userController = {
   createUser: async (req: Request, res: Response) => {
     try {
-      const newUser = await User.create(req.body, { ignoreDuplicates: true });
+      // Encriptar la contraseña
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      const newUser = await User.create({ ...req.body, password: hashedPassword });
       res.status(201).json(newUser);
     } catch (error) {
       res.status(500).json({ error: (error as Error).message });
@@ -43,8 +47,14 @@ const userController = {
       }
 
       // Verificar la contraseña
-      if (user.password !== password) {
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
         console.log(`Contraseña incorrecta para el usuario con email: ${email}`);
+        
+        // Restar un intento
+        user.attempts -= 1;
+        await user.save();
+
         return res.status(401).json({ message: "Contraseña incorrecta" });
       }
 
